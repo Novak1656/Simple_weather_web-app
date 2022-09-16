@@ -1,0 +1,25 @@
+{% load weather_tags %}
+
+<div class="border-top border-bottom rounded">
+    <div class="text-start mt-1 ms-3 mb-2"><h1 class="fs-3">Прогноз на 5 дней</h1></div>
+    <div class="row">
+        {% for weather in week_weather %}
+        <div class="col mb-3">
+            <div class="card bg-dark rounded border h-100">
+                <div class="card-title text-center">
+                    <h1 class="fs-3"> {{ weather.day_week }}</h1>
+                    <h1 class="fs-3"> {{ weather.date|date:"d M" }}</h1>
+                    <span><img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png" width="70"></span>
+                </div>
+                <div class="card-body text-center">
+                    <h1 class="fs-6">Днём: {{ weather.temp_day|is_plus_temp }} °C</h1>
+                    <h1 class="fs-6">Вечером: {{ weather.temp_eve|is_plus_temp }} °C</h1>
+                </div>
+                <div class="card-footer">
+                    <h1 class="fs-6">{{ weather.weather_status|title }}</h1>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

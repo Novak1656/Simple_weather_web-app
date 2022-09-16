@@ -1,0 +1,57 @@
+{% extends 'main_app/base_main_app.html' %}
+{% load weather_tags %}
+
+{% block title %} Погода | {{ city }} {% endblock %}
+
+{% block content %}
+
+
+<div class="text-center border-bottom">
+    <h1 class="display-2 text-white"><span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cloud-drizzle" viewBox="0 0 16 16">
+  <path d="M4.158 12.025a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm6 0a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm-3.5 1.5a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm6 0a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm.747-8.498a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 11H13a3 3 0 0 0 .405-5.973zM8.5 2a4 4 0 0 1 3.976 3.555.5.5 0 0 0 .5.445H13a2 2 0 0 1 0 4H3.5a2.5 2.5 0 1 1 .605-4.926.5.5 0 0 0 .596-.329A4.002 4.002 0 0 1 8.5 2z"/>
+</svg></span>WeatherAPP<span><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cloud-drizzle" viewBox="0 0 16 16">
+  <path d="M4.158 12.025a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm6 0a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm-3.5 1.5a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 0 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm6 0a.5.5 0 0 1 .316.633l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.317zm.747-8.498a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 11H13a3 3 0 0 0 .405-5.973zM8.5 2a4 4 0 0 1 3.976 3.555.5.5 0 0 0 .5.445H13a2 2 0 0 1 0 4H3.5a2.5 2.5 0 1 1 .605-4.926.5.5 0 0 0 .596-.329A4.002 4.002 0 0 1 8.5 2z"/>
+</svg></span></h1>
+</div>
+<br>
+{% if message %}
+<div class="container text-center text-white w-50">
+    <h1 class="fs-3">{{ message }}</h1>
+    <form role="search" method="get" action="{% url 'weather_view' %}" class="mt-2">
+        <input class="form-control" type="search" name="city_name" placeholder="Введите название города" aria-label="Search">
+    </form>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-7">
+        <div class="container text-white">
+            <div class="card bg-dark rounded border mb-3">
+                <div class="card-title mt-3 ms-3">
+                    <h1 class="fs-3">Сейчас {{ cur_time }} | {{ weather_status|title }}</h1>
+                </div>
+                <div class="card-body">
+                    <h1 class="display-3">{{ temp|is_plus_temp }} °C <span><img src="https://openweathermap.org/img/wn/{{icon}}@2x.png" width="120"></span></h1>
+                    <h1 class="fs-3">Ощущается как {{ feels_like|is_plus_temp }} °C</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="container text-center text-white mt-5">
+            <h1 class="fs-1">Погода в городе {{ city }}</h1>
+        </div>
+        <br>
+        <div class="container">
+            <form role="search" method="get" action="{% url 'weather_view' %}" class="mt-2">
+                <input class="form-control" type="search" name="city_name" placeholder="Введите название города..." aria-label="Search">
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="container text-white">
+    {% get_weather_5_day city %}
+</div>
+{% endif %}
+
+{% endblock %}
