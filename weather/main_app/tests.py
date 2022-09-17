@@ -1,7 +1,4 @@
 from django.test import TestCase
-
-# Test context
-# Перенести функционал тега во вьюшку
 from django.urls import reverse
 from django.utils.timezone import now
 
